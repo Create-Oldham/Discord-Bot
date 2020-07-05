@@ -1,11 +1,12 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+var config = require('./config.json');
 
 client.once('ready', () => {
     console.log('Ready!');
 });
 
-client.login('');
+client.login(config.token);
 
 client.on('message', message => {
     console.log(message.content);
