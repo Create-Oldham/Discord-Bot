@@ -1,3 +1,4 @@
 {
-    "token":""
+    "botToken":"",
+    "inviteTokens": [{"role":"","token":""}]
 }

@@ -4,7 +4,7 @@ var config = require('./config.json');
 
 
 
-client.login(config.token);
+client.login(config.botToken);
 
 client.on('message', message => {
     console.log(message.content);
@@ -52,17 +52,19 @@ client.on('guildMemberAdd', member => {
         const logChannel = member.guild.channels.cache.find(channel => channel.name === "testing");
         // A real basic message with the information we need. 
         logChannel.send(`${member.user.tag} joined using invite code ${invite.code} Invite was used ${invite.uses} times since its creation.`);
+        for (i = 0; i < config.inviteTokens.length; i++) {
+            if (invite.code === config.inviteTokens[i].token) {
+                console.log("He's a member!")
+                let role = member.guild.roles.cache.find(r => r.name === config.inviteTokens[i].role);
 
-        if (invite.code === config.memberInvite) {
-            console.log("He's a member!")
-            let role = member.guild.roles.cache.find(r => r.name === "Test");
 
 
+                // Add the role!
+                member.roles.add(role).catch(console.error);
 
-            // Add the role!
-            member.roles.add(role).catch(console.error);
-
+            }
         }
+
     });
 });
 
