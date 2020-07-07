@@ -1,4 +1,16 @@
 {
     "botToken":"",
-    "inviteTokens": [{"role":"","token":""}]
+    "inviteTokens": [{"role":"","token":""}],
+    "sqlConfig":{
+        "user": "",
+        "password": "",
+        "server": "",
+        "driver": "",
+        "database": "",
+        "options": {
+            "instanceName": "",
+            "enableArithAbort": true
+    
+        }
+    }
 }
