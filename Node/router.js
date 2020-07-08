@@ -56,23 +56,38 @@ function resetCache() {
     var membersInDatabase
     const listOfUsers = client.guilds.cache.get("689500677252186152");
 
+    var listOfUserID = [];
+    listOfUsers.members.cache.forEach(m => {
+        listOfUserID.push(m.id);
+    })
+    var membersInDatabase = [];
+
+    console.log(listOfUserID)
+
     sql.connect()
         .then((conn) => {
             new sql.command('Users_sel', conn)
                 .then((command) => {
                     command.RunQuery()
                         .then((result) => {
-                            membersInDatabase = result.recordset;
+                            membersInDatabase = [];
                             console.log("1");
+
+                            result.recordset.forEach(m => {
+                                console.log(m)
+                                membersInDatabase.push(m.DiscordID)
+                            })
+
+                            console.log(membersInDatabase)
                             if (result.recordset.length > 1) {
-                                membersInDatabase.forEach(m => {
-                                    console.log(listOfUsers.includes(m.DiscordID))
-                                    if (!listOfUsers.includes(m.DiscordID)) {
+                                listOfUserID.forEach(m => {
+                                    console.log(membersInDatabase.includes(m))
+                                    if (!membersInDatabase.includes(m)) {
                                         sql.connect()
                                             .then((conn) => {
                                                 new sql.command('Users_ups', conn)
                                                     .then((command) => {
-                                                        command.input('DiscordID', sql.sqlType.VarChar(25), member.id);
+                                                        command.input('DiscordID', sql.sqlType.VarChar(25), m);
                                                         command.input('Admin', sql.sqlType.TinyInt, 0);
                                                         console.log("2")
                                                         command.RunQuery()
@@ -88,7 +103,7 @@ function resetCache() {
                                 })
 
                             } else {
-                                console.log(membersInDatabase[0].DiscordID)
+                                console.log("blah")
                             }
                         })
                         .catch((err) => responseError(err, 'run query'));
