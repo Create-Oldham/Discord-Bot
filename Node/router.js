@@ -1,15 +1,17 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 var config = require('./config.json');
-
+var sql = require('./utils.js')
 
 
 client.login(config.botToken);
 
 client.on('message', message => {
+
     console.log(message.content);
 
     let member = message.member;
+    console.log(member.id);
 
     if (message.content === '!ping') {
         // send back "Pong." to the channel the message was sent in
@@ -40,6 +42,7 @@ client.on('ready', () => {
 
 
 client.on('guildMemberAdd', member => {
+    console.log(member.id);
     // To compare, we need to load the current invite list.
     member.guild.fetchInvites().then(guildInvites => {
         // This is the *existing* invites for the guild.
@@ -57,8 +60,6 @@ client.on('guildMemberAdd', member => {
                 console.log("He's a member!")
                 let role = member.guild.roles.cache.find(r => r.name === config.inviteTokens[i].role);
 
-
-
                 // Add the role!
                 member.roles.add(role).catch(console.error);
 
@@ -66,6 +67,24 @@ client.on('guildMemberAdd', member => {
         }
 
     });
+
+    sql.connect()
+    .then((conn) => {
+        new sql.command('Users_ups', conn)
+            .then((command) => {
+                command.input('DiscordID', sql.sqlType.Int, member.id);
+                command.RunQuery()
+                    .then((result) => {
+                        result = JSON.parse(result);
+                        console.dir(result)
+                    })
+                    .catch((err) => responseError(err,'run query'));
+            })
+            .catch((err) => responseError(err,'command'));
+    })
+    .catch((err) => responseError(err,'connection'));
 });
 
-
+const responseError = (err,msg) => {
+    console.error(`error: ${err}`);
+}
