@@ -17,7 +17,15 @@ client.on('message', message => {
         // send back "Pong." to the channel the message was sent in
 
         message.channel.send('Pong.');
-    } else {
+    } else if
+        (message.content === '!cache') {
+        // Get the Guild and store it under the variable "list"
+
+    }
+    else {
+
+
+
     }
 
 });
@@ -38,8 +46,57 @@ client.on('ready', () => {
             invites[g.id] = guildInvites;
         });
     });
+
+
+    resetCache()
+
 });
 
+function resetCache() {
+    var membersInDatabase
+    const listOfUsers = client.guilds.cache.get("689500677252186152");
+
+    sql.connect()
+        .then((conn) => {
+            new sql.command('Users_sel', conn)
+                .then((command) => {
+                    command.RunQuery()
+                        .then((result) => {
+                            membersInDatabase = result.recordset;
+                            console.log("1");
+                            if (result.recordset.length > 1) {
+                                membersInDatabase.forEach(m => {
+                                    console.log(listOfUsers.includes(m.DiscordID))
+                                    if (!listOfUsers.includes(m.DiscordID)) {
+                                        sql.connect()
+                                            .then((conn) => {
+                                                new sql.command('Users_ups', conn)
+                                                    .then((command) => {
+                                                        command.input('DiscordID', sql.sqlType.VarChar(25), member.id);
+                                                        command.input('Admin', sql.sqlType.TinyInt, 0);
+                                                        console.log("2")
+                                                        command.RunQuery()
+                                                            .then((result) => {
+                                                                console.log('Sucessfully added to database');
+                                                            })
+                                                            .catch((err) => responseError(err, 'run query'));
+                                                    })
+                                                    .catch((err) => responseError(err, 'command'));
+                                            })
+                                            .catch((err) => responseError(err, 'connection'));
+                                    }
+                                })
+
+                            } else {
+                                console.log(membersInDatabase[0].DiscordID)
+                            }
+                        })
+                        .catch((err) => responseError(err, 'run query'));
+                })
+                .catch((err) => responseError(err, 'command'));
+        })
+        .catch((err) => responseError(err, 'connection'));
+}
 
 client.on('guildMemberAdd', member => {
     const logChannel = member.guild.channels.cache.find(channel => channel.name === "testing");
@@ -68,27 +125,7 @@ client.on('guildMemberAdd', member => {
 
     });
 
-    sql.connect()
-        .then((conn) => {
-            new sql.command('Users_ups', conn)
-                .then((command) => {
-                    command.input('DiscordID', sql.sqlType.VarChar(25), member.id);
-                    command.input('Admin', sql.sqlType.TinyInt, 0);
 
-                    command.RunQuery()
-                        .then((result) => {
-                            console.dir(result);
-                            if (result.length != 0) {
-                                logChannel.send(`${member.user.tag} joined`);
-                            } else {
-                                logChannel.send(`${member.user.tag} joined They we're already in the DB`);
-                            }
-                        })
-                        .catch((err) => responseError(err, 'run query'));
-                })
-                .catch((err) => responseError(err, 'command'));
-        })
-        .catch((err) => responseError(err, 'connection'));
 });
 
 const responseError = (err, msg) => {
