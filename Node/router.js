@@ -42,6 +42,8 @@ client.on('ready', () => {
 
 
 client.on('guildMemberAdd', member => {
+    const logChannel = member.guild.channels.cache.find(channel => channel.name === "testing");
+
     console.log(member.id);
     // To compare, we need to load the current invite list.
     member.guild.fetchInvites().then(guildInvites => {
@@ -52,9 +54,7 @@ client.on('guildMemberAdd', member => {
         // Look through the invites, find the one for which the uses went up.
         const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
         // Get the log channel (change to your liking)
-        const logChannel = member.guild.channels.cache.find(channel => channel.name === "testing");
         // A real basic message with the information we need. 
-        logChannel.send(`${member.user.tag} joined using invite code ${invite.code} Invite was used ${invite.uses} times since its creation.`);
         for (i = 0; i < config.inviteTokens.length; i++) {
             if (invite.code === config.inviteTokens[i].token) {
                 console.log("He's a member!")
@@ -69,22 +69,30 @@ client.on('guildMemberAdd', member => {
     });
 
     sql.connect()
-    .then((conn) => {
-        new sql.command('Users_ups', conn)
-            .then((command) => {
-                command.input('DiscordID', sql.sqlType.Int, member.id);
-                command.RunQuery()
-                    .then((result) => {
-                        result = JSON.parse(result);
-                        console.dir(result)
-                    })
-                    .catch((err) => responseError(err,'run query'));
-            })
-            .catch((err) => responseError(err,'command'));
-    })
-    .catch((err) => responseError(err,'connection'));
+        .then((conn) => {
+            new sql.command('Users_ups', conn)
+                .then((command) => {
+                    command.input('DiscordID', sql.sqlType.VarChar(25), member.id);
+                    command.input('Admin', sql.sqlType.TinyInt, 0);
+
+                    command.RunQuery()
+                        .then((result) => {
+                            console.dir(result);
+                            if (result.length != 0) {
+                                logChannel.send(`${member.user.tag} joined`);
+                            } else {
+                                logChannel.send(`${member.user.tag} joined They we're already in the DB`);
+                            }
+                        })
+                        .catch((err) => responseError(err, 'run query'));
+                })
+                .catch((err) => responseError(err, 'command'));
+        })
+        .catch((err) => responseError(err, 'connection'));
 });
 
-const responseError = (err,msg) => {
+const responseError = (err, msg) => {
     console.error(`error: ${err}`);
 }
+
+
