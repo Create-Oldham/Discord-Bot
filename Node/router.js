@@ -19,7 +19,8 @@ client.on('message', message => {
         message.channel.send('Pong.');
     } else if
         (message.content === '!cache') {
-        // Get the Guild and store it under the variable "list"
+        //reset the cache for the members
+        resetCache()
 
     }
     else {
@@ -33,7 +34,7 @@ client.on('message', message => {
 // Initialize the invite cache
 const invites = {};
 
-// A pretty useful method to create a delay without blocking the whole script.
+// Create a delay without blocking the whole script.
 const wait = require('util').promisify(setTimeout);
 
 client.on('ready', () => {
