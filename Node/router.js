@@ -7,22 +7,35 @@ var sql = require('./utils.js')
 client.login(config.botToken);
 
 client.on('message', message => {
+	if (!message.content.startsWith(config.prefix)) return;
 
+	const withoutPrefix = message.content.slice(config.prefix.length);
+	const split = withoutPrefix.split(/ +/);
+	const command = split[0];
+	const args = split.slice(1);
     console.log(message.content);
 
     let member = message.member;
     console.log(member.id);
 
-    if (message.content === '!ping') {
+    if (message.content.toLowerCase() === '!ping') {
         // send back "Pong." to the channel the message was sent in
 
         message.channel.send('Pong.');
     } else if
-        (message.content === '!cache') {
+        (message.content.toLowerCase() === '!cache') {
         //reset the cache for the members
         resetCache()
 
-    }
+    } else if (message.content.toLowerCase().includes("!add")){
+        console.log("Add new induction")
+        if (args[0]) {
+            const user = getUserFromMention(args[0]);
+            if (!user) {
+                return message.reply('Please use a proper mention if you want to see someone else\'s avatar.');
+            } else {
+                message.reply("Added " + '<@'+ user.id + '>' + " to the machine ")}
+        }}
     else {
 
 
@@ -30,7 +43,19 @@ client.on('message', message => {
     }
 
 });
+function getUserFromMention(mention) {
+	if (!mention) return;
 
+	if (mention.startsWith('<@') && mention.endsWith('>')) {
+		mention = mention.slice(2, -1);
+
+		if (mention.startsWith('!')) {
+			mention = mention.slice(1);
+		}
+
+		return client.users.cache.get(mention);
+	}
+}
 // Initialize the invite cache
 const invites = {};
 
@@ -63,8 +88,6 @@ function resetCache() {
     })
     var membersInDatabase = [];
 
-    console.log(listOfUserID)
-
     sql.connect()
         .then((conn) => {
             new sql.command('Users_sel', conn)
@@ -72,17 +95,12 @@ function resetCache() {
                     command.RunQuery()
                         .then((result) => {
                             membersInDatabase = [];
-                            console.log("1");
 
                             result.recordset.forEach(m => {
-                                console.log(m)
                                 membersInDatabase.push(m.DiscordID)
                             })
-
-                            console.log(membersInDatabase)
                             if (result.recordset.length > 1) {
                                 listOfUserID.forEach(m => {
-                                    console.log(membersInDatabase.includes(m))
                                     if (!membersInDatabase.includes(m)) {
                                         sql.connect()
                                             .then((conn) => {
@@ -90,7 +108,6 @@ function resetCache() {
                                                     .then((command) => {
                                                         command.input('DiscordID', sql.sqlType.VarChar(25), m);
                                                         command.input('Admin', sql.sqlType.TinyInt, 0);
-                                                        console.log("2")
                                                         command.RunQuery()
                                                             .then((result) => {
                                                                 console.log('Sucessfully added to database');
