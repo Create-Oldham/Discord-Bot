@@ -7,12 +7,12 @@ var sql = require('./utils.js')
 client.login(config.botToken);
 
 client.on('message', message => {
-	if (!message.content.startsWith(config.prefix)) return;
+    if (!message.content.startsWith(config.prefix)) return;
 
-	const withoutPrefix = message.content.slice(config.prefix.length);
-	const split = withoutPrefix.split(/ +/);
-	const command = split[0];
-	const args = split.slice(1);
+    const withoutPrefix = message.content.slice(config.prefix.length);
+    const split = withoutPrefix.split(/ +/);
+    const command = split[0];
+    const args = split.slice(1);
     console.log(message.content);
 
     let member = message.member;
@@ -27,15 +27,17 @@ client.on('message', message => {
         //reset the cache for the members
         resetCache()
 
-    } else if (message.content.toLowerCase().includes("!add")){
+    } else if (message.content.toLowerCase().includes("!add")) {
         console.log("Add new induction")
         if (args[0]) {
             const user = getUserFromMention(args[0]);
             if (!user) {
-                return message.reply('Please use a proper mention if you want to see someone else\'s avatar.');
+                return message.reply('Please use a proper mention if you want to add someone to a piece of equipment');
             } else {
-                message.reply("Added " + '<@'+ user.id + '>' + " to the machine ")}
-        }}
+                message.reply("Added " + '<@' + user.id + '>' + " to the machine ")
+            }
+        }
+    }
     else {
 
 
@@ -44,17 +46,17 @@ client.on('message', message => {
 
 });
 function getUserFromMention(mention) {
-	if (!mention) return;
+    if (!mention) return;
 
-	if (mention.startsWith('<@') && mention.endsWith('>')) {
-		mention = mention.slice(2, -1);
+    if (mention.startsWith('<@') && mention.endsWith('>')) {
+        mention = mention.slice(2, -1);
 
-		if (mention.startsWith('!')) {
-			mention = mention.slice(1);
-		}
+        if (mention.startsWith('!')) {
+            mention = mention.slice(1);
+        }
 
-		return client.users.cache.get(mention);
-	}
+        return client.users.cache.get(mention);
+    }
 }
 // Initialize the invite cache
 const invites = {};
