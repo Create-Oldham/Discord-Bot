@@ -7,6 +7,7 @@ var sql = require('./utils.js')
 client.login(config.botToken);
 
 client.on('message', message => {
+    console.log(message.member.roles)
     if (!message.content.startsWith(config.prefix)) return;
 
     const withoutPrefix = message.content.slice(config.prefix.length);
@@ -27,24 +28,26 @@ client.on('message', message => {
         //reset the cache for the members
         resetCache()
 
-    } else if (message.content.toLowerCase().includes("!add")) {
-        console.log("Add new induction")
-        if (args[0]) {
-            const user = getUserFromMention(args[0]);
-            if (!user) {
-                return message.reply('Please use a proper mention if you want to add someone to a piece of equipment');
-            } else {
-                message.reply("Added " + '<@' + user.id + '>' + " to the machine ")
+    } else if (message.content.toLowerCase().includes("!add")) { //add a user after they have had an induction
+        if (message.member.roles.cache.some(r => r.name === config.inductorRole)) {
+            console.log("Add new induction")
+            if (args[0]) {
+                const user = getUserFromMention(args[0]);
+                if (!user) {
+                    return message.reply('Please use a proper mention if you want to add someone to a piece of equipment');
+                } else {
+                    message.reply("Added " + '<@' + user.id + '>' + " to the machine ")
+                }
             }
         }
     }
-    else {
+        else {
 
 
 
-    }
+        }
 
-});
+    });
 function getUserFromMention(mention) {
     if (!mention) return;
 
