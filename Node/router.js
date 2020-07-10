@@ -129,7 +129,7 @@ client.on('guildMemberAdd', member => {
         // A real basic message with the information we need. 
         for (i = 0; i < config.inviteTokens.length; i++) {
             if (invite.code === config.inviteTokens[i].token) {
-                console.log("He's a member!")
+                console.log("Joined using code " + config.inviteTokens[i].token + " assigned role " + config.inviteTokens[i].role)
                 let role = member.guild.roles.cache.find(r => r.name === config.inviteTokens[i].role);
 
                 // Add the role!
