@@ -3,16 +3,12 @@ module.exports = { resetCache:(sql,client,config)  => {
     const listOfUsers = client.guilds.cache.get("689500677252186152")
 
     var listOfUserID = [];
-    console.log(config.memberRole)
     listOfUsers.members.cache.forEach(m => {
-        console.log(m.id)
 
         if (m.roles.cache.some(r => r.name === config.memberRole)) {
-            console.log("Member added")
         listOfUserID.push(m.id);
         }
 
-        console.log(listOfUserID)
     })
     var membersInDatabase = [];
 
