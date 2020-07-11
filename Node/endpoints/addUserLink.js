@@ -31,7 +31,7 @@ module.exports = {
                                             if (resultOutcome.toLowerCase() === "success") {
                                                 message.reply("Added " + '<@' + user.id + '>' + " to the machine ")
                                             } else if (resultOutcome.toLowerCase() === "exists") {
-                                                message.reply('<@' + user.id + '>' + " already exists ")
+                                                message.reply('<@' + user.id + '>' + " already exists with a link to " + searchTerm)
 
                                             } else if (resultOutcome.toLowerCase() === "failiure") {
                                                 message.reply("Permissions Issue")
