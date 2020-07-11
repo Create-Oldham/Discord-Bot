@@ -50,7 +50,7 @@ module.exports = {
                         .catch((err) => sql.responseError(err, 'connection'));
                 }
             }
-            message.reply("You don't have a role that allows adding induction privledges")
         }
+        message.reply("You don't have a role that allows adding induction privledges")
     }
 }
