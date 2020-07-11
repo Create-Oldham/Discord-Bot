@@ -1,0 +1,56 @@
+module.exports = {
+    addUserLink: (client,message, sql, config) => {
+        const splitMessage = message.content.split(" ")
+
+        if (message.member.roles.cache.some(r => r.name === config.inductorRole)) {
+            console.log("Add new induction")
+            var searchTerm = "";
+            for (i = 2; i < splitMessage.length; i++) {
+                searchTerm = searchTerm + " " + splitMessage[i];
+            }
+            const args = splitMessage[1];
+
+            if (args) {
+                const user = require("../utils/discordUtils.js").getUserFromMention(client,args);
+                if (!user) {
+                    return message.reply('Please use a proper mention if you want to add someone to a piece of equipment');
+                } else {
+                    sql.connect()
+                        .then((conn) => {
+                            new sql.command('EquipmentLink_ins', conn)
+                                .then((command) => {
+                                    command.input('SearchTerm', sql.sqlType.VarChar(50), searchTerm);
+                                    command.input('DiscordID', sql.sqlType.VarChar(25), user.id);
+                                    command.input('Admin', sql.sqlType.TinyInt, 0);
+                                    command.input('UID', sql.sqlType.VarChar(25), message.member.id);
+
+                                    command.RunQuery()
+                                        .then((result) => {
+                                            var resultOutcome = result.recordset[0].result;
+                                            console.log(resultOutcome)
+                                            if (resultOutcome.toLowerCase() === "success") {
+                                                message.reply("Added " + '<@' + user.id + '>' + " to the machine ")
+                                            } else if (resultOutcome.toLowerCase() === "exists") {
+                                                message.reply('<@' + user.id + '>' + " already exists ")
+
+                                            } else if (resultOutcome.toLowerCase() === "failiure") {
+                                                message.reply("Permissions Issue")
+                                                console.log(message.member.id)
+                                            } else if (resultOutcome.toLowerCase() === "invalid") {
+                                                message.reply("The search term"+searchTerm+" returned no results, use !Equipment to get a list of potential equipment names")
+                                                console.log(message.member.id)
+                                            } else {
+                                                message.reply("Failiure due to unknown reason")
+                                            }
+                                        })
+                                        .catch((err) => sql.responseError(err, 'run query'));
+                                })
+                                .catch((err) => sql.responseError(err, 'command'));
+                        })
+                        .catch((err) => sql.responseError(err, 'connection'));
+                }
+            }
+            message.reply("You don't have a role that allows adding induction privledges")
+        }
+    }
+}

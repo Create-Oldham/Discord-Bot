@@ -1,23 +1,14 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 var config = require('./config.json');
-var sql = require('./utils.js')
+var sql = require('./utils/utils.js')
+var cache = require('./cache/cache.js')
 
 
 client.login(config.botToken);
 
 client.on('message', message => {
-    console.log(message.member.roles)
     if (!message.content.startsWith(config.prefix)) return;
-
-    const withoutPrefix = message.content.slice(config.prefix.length);
-    const split = withoutPrefix.split(/ +/);
-    const command = split[0];
-    const args = split.slice(1);
-    console.log(message.content);
-
-    let member = message.member;
-    console.log(member.id);
 
     if (message.content.toLowerCase() === '!ping') {
         // send back "Pong." to the channel the message was sent in
@@ -29,38 +20,17 @@ client.on('message', message => {
         resetCache()
 
     } else if (message.content.toLowerCase().includes("!add")) { //add a user after they have had an induction
-        if (message.member.roles.cache.some(r => r.name === config.inductorRole)) {
-            console.log("Add new induction")
-            if (args[0]) {
-                const user = getUserFromMention(args[0]);
-                if (!user) {
-                    return message.reply('Please use a proper mention if you want to add someone to a piece of equipment');
-                } else {
-                    message.reply("Added " + '<@' + user.id + '>' + " to the machine ")
-                }
-            }
-        }
+        var addUserLink = require('./endpoints/addUserLink.js')
+        addUserLink.addUserLink(client,message,sql,config)
     }
-        else {
+    else {
 
 
 
-        }
-
-    });
-function getUserFromMention(mention) {
-    if (!mention) return;
-
-    if (mention.startsWith('<@') && mention.endsWith('>')) {
-        mention = mention.slice(2, -1);
-
-        if (mention.startsWith('!')) {
-            mention = mention.slice(1);
-        }
-
-        return client.users.cache.get(mention);
     }
-}
+
+});
+
 // Initialize the invite cache
 const invites = {};
 
@@ -79,62 +49,11 @@ client.on('ready', () => {
     });
 
 
-    resetCache()
+    cache.resetCache(sql,client,config)
 
 });
 
-function resetCache() {
-    var membersInDatabase
-    const listOfUsers = client.guilds.cache.get("689500677252186152");
 
-    var listOfUserID = [];
-    listOfUsers.members.cache.forEach(m => {
-        listOfUserID.push(m.id);
-    })
-    var membersInDatabase = [];
-
-    sql.connect()
-        .then((conn) => {
-            new sql.command('Users_sel', conn)
-                .then((command) => {
-                    command.RunQuery()
-                        .then((result) => {
-                            membersInDatabase = [];
-
-                            result.recordset.forEach(m => {
-                                membersInDatabase.push(m.DiscordID)
-                            })
-                            if (result.recordset.length > 1) {
-                                listOfUserID.forEach(m => {
-                                    if (!membersInDatabase.includes(m)) {
-                                        sql.connect()
-                                            .then((conn) => {
-                                                new sql.command('Users_ups', conn)
-                                                    .then((command) => {
-                                                        command.input('DiscordID', sql.sqlType.VarChar(25), m);
-                                                        command.input('Admin', sql.sqlType.TinyInt, 0);
-                                                        command.RunQuery()
-                                                            .then((result) => {
-                                                                console.log('Sucessfully added to database');
-                                                            })
-                                                            .catch((err) => responseError(err, 'run query'));
-                                                    })
-                                                    .catch((err) => responseError(err, 'command'));
-                                            })
-                                            .catch((err) => responseError(err, 'connection'));
-                                    }
-                                })
-
-                            } else {
-                                console.log("blah")
-                            }
-                        })
-                        .catch((err) => responseError(err, 'run query'));
-                })
-                .catch((err) => responseError(err, 'command'));
-        })
-        .catch((err) => responseError(err, 'connection'));
-}
 
 client.on('guildMemberAdd', member => {
     const logChannel = member.guild.channels.cache.find(channel => channel.name === "testing");
@@ -152,22 +71,20 @@ client.on('guildMemberAdd', member => {
         // A real basic message with the information we need. 
         for (i = 0; i < config.inviteTokens.length; i++) {
             if (invite.code === config.inviteTokens[i].token) {
-                console.log("Joined using code " + config.inviteTokens[i].token + " assigned role " + config.inviteTokens[i].role)
                 let role = member.guild.roles.cache.find(r => r.name === config.inviteTokens[i].role);
 
                 // Add the role!
                 member.roles.add(role).catch(console.error);
+                logChannel.send("Joined using code " + config.inviteTokens[i].token + " assigned role " + config.inviteTokens[i].role)
 
             }
         }
 
     });
 
+    cache.resetCache(sql,client,config)
 
 });
 
-const responseError = (err, msg) => {
-    console.error(`error: ${err}`);
-}
 
 

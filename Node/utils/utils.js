@@ -1,4 +1,4 @@
-const config = require('./config'),
+const config = require('../config'),
     sql = require('mssql');
 
     var sqlConfig = config.sqlConfig;
@@ -27,5 +27,11 @@ module.exports = {
         RunQuery() {
             return this.qry.execute(this.sproc);
         }
-    }
+    },
+
+    
+ responseError: (err, msg) => {
+    console.error(`error: ${err}`);
+}
 };
+
