@@ -17,11 +17,11 @@ client.on('message', message => {
     } else if
         (message.content.toLowerCase() === '!cache') {
         //reset the cache for the members
-        cache.resetCache(sql,client,config)
+        //cache.resetCache(sql,client,config)
     } else if (message.content.toLowerCase().includes("!add")) {
-        require('./endpoints/addUserLink.js').addUserLink(client,message,sql,config)
+        //require('./endpoints/addUserLink.js').addUserLink(client,message,sql,config)
     }else if (message.content.toLowerCase().includes("!equipment")) { 
-        console.log(require('./endpoints/equipmentList.js').equipmentList(sql,message))
+        //console.log(require('./endpoints/equipmentList.js').equipmentList(sql,message))
     }
     else {
 
@@ -49,7 +49,7 @@ client.on('ready', () => {
     });
 
 
-    cache.resetCache(sql,client,config)
+    //cache.resetCache(sql,client,config)
 
 });
 
@@ -82,7 +82,7 @@ client.on('guildMemberAdd', member => {
 
     });
 
-    cache.resetCache(sql,client,config)
+    //cache.resetCache(sql,client,config)
 
 });
 
