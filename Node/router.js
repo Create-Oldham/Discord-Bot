@@ -12,8 +12,7 @@ client.on('message', message => {
 
     if (message.content.toLowerCase() === '!ping') {
         // send back "Pong." to the channel the message was sent in
-
-        message.channel.send('Pong.');
+        require("./endpoints/ping.js").ping(message)
     } else if
         (message.content.toLowerCase() === '!cache') {
         //reset the cache for the members
