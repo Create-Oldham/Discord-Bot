@@ -20,7 +20,7 @@ client.on('message', message => {
     } else if (message.content.toLowerCase().includes("!add")) {
         require('./endpoints/addUserLink.js').addUserLink(client,message,sql,config)
     }else if (message.content.toLowerCase().includes("!equipment")) { 
-        console.log(require('./endpoints/equipmentList.js').equipmentList(sql,message))
+        require('./endpoints/equipmentList.js').equipmentList(sql,message)
     }
     else {
 
