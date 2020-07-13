@@ -1,11 +1,14 @@
 {
+    "prefix":"!",
     "botToken":"",
     "inviteTokens": [{"role":"","token":""}],
+    "inductorRole": "",
+    "memberRole": "",
     "sqlConfig":{
         "user": "",
         "password": "",
         "server": "",
-        "driver": "",
+        "driver": "tedious",
         "database": "",
         "options": {
             "instanceName": "",
