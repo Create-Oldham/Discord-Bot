@@ -1,5 +1,5 @@
 module.exports = {
-    addUserLink: (client, message, sql, config) => {
+    addUserLink: (client, message, sql, config, admin) => {
         const splitMessage = message.content.split(' ')
         if (message.guild !== null) {
             if (message.member.roles.cache.some(r => r.name === config.inductorRole)) {
@@ -25,7 +25,7 @@ module.exports = {
                                         .then((command) => {
                                             command.input('SearchTerm', sql.sqlType.VarChar(50), searchTerm);
                                             command.input('DiscordID', sql.sqlType.VarChar(25), user.id);
-                                            command.input('Admin', sql.sqlType.TinyInt, 0);
+                                            command.input('Admin', sql.sqlType.TinyInt, admin);
                                             command.input('UID', sql.sqlType.VarChar(25), message.author.id);
 
                                             command.RunQuery()
@@ -33,7 +33,12 @@ module.exports = {
                                                     var resultOutcome = result.recordset[0].result;
                                                     console.log(resultOutcome)
                                                     if (resultOutcome.toLowerCase() === "success") {
-                                                        message.reply("Added " + '<@' + user.id + '>' + " to the machine ")
+                                                        if (admin === 1) {
+                                                            message.reply("Added " + '<@' + user.id + '>' + " to the machine as an inductor")
+
+                                                        } else {
+                                                            message.reply("Added " + '<@' + user.id + '>' + " to the machine ")
+                                                        }
                                                     } else if (resultOutcome.toLowerCase() === "exists") {
                                                         message.reply('<@' + user.id + '>' + " already exists with a link to " + searchTerm);
 

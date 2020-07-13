@@ -18,7 +18,9 @@ client.on('message', message => {
         //reset the cache for the members
         cache.resetCache(sql,client,config)
     } else if (message.content.toLowerCase().includes("!add")) {
-        require('./endpoints/addUserLink.js').addUserLink(client,message,sql,config)
+        require('./endpoints/addUserLink.js').addUserLink(client,message,sql,config,0)
+    }else if (message.content.toLowerCase().includes("!admin")) {
+        require('./endpoints/addUserLink.js').addUserLink(client,message,sql,config,1)
     }else if (message.content.toLowerCase().includes("!equipment")) { 
         require('./endpoints/equipmentList.js').equipmentList(sql,message)
     }else if (message.content.toLowerCase().includes("!code")) { 
