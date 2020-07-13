@@ -21,18 +21,19 @@ module.exports = {
 
                         command.RunQuery()
                             .then((result) => {
+                                console.log(result.recordsets[1])
                                 var resultOutcome = result.recordset[0].result;
-                                console.log(resultOutcome)
+                                console.log(result.recordsets[1][0].EquipmentName)
                                 if (resultOutcome.toLowerCase() === "success") {
-                                    message.reply("*" + result.recordset[1].EquipmentName + "* \n" + result.recordset[1].EquipmentInstructions)
+                                    message.author.send("Instructions for the *" + result.recordsets[1][0].EquipmentName + "* \n" + result.recordsets[1][0].EquipmentInstructions)
                                 } else if (resultOutcome.toLowerCase() === "failiure") {
-                                    message.reply("You don't have permission to view the code for this machine")
+                                    message.author.send("You don't have permission to view the code for this machine")
                                     console.log(message.member.id);
                                 } else if (resultOutcome.toLowerCase() === "invalid") {
-                                    message.reply("The search term " + searchTerm + " returned no results, use !Equipment to get a list of potential equipment names ")
+                                    message.author.send("The search term " + searchTerm + " returned no results, use !Equipment to get a list of potential equipment names ")
                                     console.log(message.member.id);
                                 } else {
-                                    message.reply("Failiure due to unknown reason")
+                                    message.author.send("Failiure due to unknown reason")
                                 }
                             })
                             .catch((err) => sql.responseError(err, 'run query'));
