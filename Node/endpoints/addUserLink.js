@@ -4,15 +4,21 @@ module.exports = {
         if (message.guild !== null) {
             if (message.member.roles.cache.some(r => r.name === config.inductorRole)) {
                 console.log("Add new induction")
+
                 var searchTermRaw = "";
                 console.log(splitMessage);
                 for (i = 2; i < splitMessage.length; i++) {
+                    console.log(i)
                     searchTermRaw = searchTermRaw + splitMessage[i] + " ";
                 }
 
                 var searchTerm = searchTermRaw.trim();
+
+                console.log(searchTerm.length)
                 if (searchTerm !== '') {
 
+                    var searchTerm = searchTermRaw.trim();
+                    console.log("Search:" + searchTerm)
                     const args = splitMessage[1];
                     if (args) {
                         const user = require("../utils/discordUtils.js").getUserFromMention(client, args);
@@ -60,10 +66,12 @@ module.exports = {
                         }
                     }
                 } else {
-                    message.reply("You don't have a role that allows adding induction privledges")
+                    message.reply("Please enter a search term")
+
                 }
             } else {
-                message.reply("Please enter a search term")
+                message.reply("You don't have a role that allows adding induction privledges")
+
             }
         } else {
             message.author.send("Please send this message in a channel on the Create Oldham Server")

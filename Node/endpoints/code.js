@@ -1,14 +1,15 @@
 module.exports = {
     code: (client, message, sql, config) => {
         const splitMessage = message.content.split(' ')
-
+        console.log(splitMessage)
         var searchTermRaw = "";
-        console.log(splitMessage);
         for (i = 1; i < splitMessage.length; i++) {
+            console.log(i)
             searchTermRaw = searchTermRaw + splitMessage[i] + " ";
         }
 
         var searchTerm = searchTermRaw.trim();
+        console.log(searchTerm.length)                
 
         if(searchTerm !== ''){
         sql.connect()
