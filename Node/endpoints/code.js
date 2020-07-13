@@ -29,7 +29,7 @@ module.exports = {
                                     message.reply("You don't have permission to view the code for this machine")
                                     console.log(message.member.id);
                                 } else if (resultOutcome.toLowerCase() === "invalid") {
-                                    message.reply("The search term" + searchTerm + " returned no results, use !Equipment to get a list of potential equipment names ")
+                                    message.reply("The search term " + searchTerm + " returned no results, use !Equipment to get a list of potential equipment names ")
                                     console.log(message.member.id);
                                 } else {
                                     message.reply("Failiure due to unknown reason")
