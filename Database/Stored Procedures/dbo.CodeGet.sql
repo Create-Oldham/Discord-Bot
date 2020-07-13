@@ -35,7 +35,6 @@ BEGIN
                     WHERE DiscordID = @DiscordID
                     ORDER BY ID DESC
                 );
-        SELECT @MachineID;
         IF EXISTS
         (
             SELECT ID

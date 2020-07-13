@@ -21,6 +21,8 @@ client.on('message', message => {
         require('./endpoints/addUserLink.js').addUserLink(client,message,sql,config)
     }else if (message.content.toLowerCase().includes("!equipment")) { 
         require('./endpoints/equipmentList.js').equipmentList(sql,message)
+    }else if (message.content.toLowerCase().includes("!code")) { 
+        require('./endpoints/code.js').code(client,message,sql,config)
     }
     else {
 
