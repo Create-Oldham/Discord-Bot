@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-var config = require('./config.json');
+const config = require('./config.json');
 var sql = require('./utils/utils.js')
 var cache = require('./cache/cache.js')
 
