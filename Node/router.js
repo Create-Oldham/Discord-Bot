@@ -55,7 +55,7 @@ client.on('ready', () => {
 
 
 client.on('guildMemberAdd', member => {
-    const logChannel = member.guild.channels.cache.find(channel => channel.name === "testing");
+    const logChannel = member.guild.channels.cache.find(channel => channel.name === config.inviteLogChannel);
 
     console.log(member.id);
     // To compare, we need to load the current invite list.
