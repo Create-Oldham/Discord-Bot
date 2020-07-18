@@ -1,7 +1,7 @@
 {
     "prefix":"!",
     "botToken":"",
-    "inviteTokens": [{"role":"","token":""}],
+    "inviteTokens": [{"role":"","token":"","msg":""}],
     "inductorRole": "",
     "memberRole": "",
     "sqlConfig":{
