@@ -79,6 +79,8 @@ client.on('guildMemberAdd', member => {
                 // Add the role!
                 member.roles.add(role).catch(console.error);
                 logChannel.send("Joined using code " + config.inviteTokens[i].token + " assigned role " + config.inviteTokens[i].role)
+                member.send(config.inviteTokens[i].msg);
+
 
             }
         }
@@ -86,6 +88,7 @@ client.on('guildMemberAdd', member => {
     });
 
     cache.resetCache(sql,client,config)
+
 
 });
 
