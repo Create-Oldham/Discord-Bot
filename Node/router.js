@@ -28,6 +28,10 @@ client.on('message', message => {
         require('./endpoints/points.js').pointClear(client,message,sql,config)
     }else if (message.content.toLowerCase().includes(config.plusplus.plusplusText)) { 
         require('./endpoints/points.js').pointAdd(client,message,sql)
+    }else if (message.content.toLowerCase().includes("!score")) { 
+        require('./endpoints/points.js').pointCheck(client,message,sql)
+    }else if (message.content.toLowerCase().includes("!points")) { 
+        require('./endpoints/points.js').pointCheck(client,message,sql)
     }
     else {
 
