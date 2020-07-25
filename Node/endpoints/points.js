@@ -157,7 +157,11 @@ module.exports = {
                                     var userid = result[i].userid;
                                     var points = result[i].points;
 
-                                    output = output + "*" + '<@' + userid + '>' + "*" + " - " + points + " points" + "\n";
+                                    
+let member = message.guild.member(userid);
+let nickname = member ? member.displayName : null;
+
+                                    output = output + "*"+nickname+ "*" + " - " + points + " points" + "\n";
                                 }
                                 message.channel.send(output)
                             })
