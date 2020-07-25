@@ -15,23 +15,25 @@ client.on('message', message => {
     } else if
         (message.content.toLowerCase() === '!cache') {
         //reset the cache for the members
-        cache.resetCache(sql,client,config)
+        cache.resetCache(sql, client, config)
     } else if (message.content.toLowerCase().includes("!add")) {
-        require('./endpoints/addUserLink.js').addUserLink(client,message,sql,config,0)
-    }else if (message.content.toLowerCase().includes("!admin")) {
-        require('./endpoints/addUserLink.js').addUserLink(client,message,sql,config,1)
-    }else if (message.content.toLowerCase().includes("!equipment")) { 
-        require('./endpoints/equipmentList.js').equipmentList(sql,message)
-    }else if (message.content.toLowerCase().includes("!code")) { 
-        require('./endpoints/code.js').code(client,message,sql,config)
-    }else if (message.content.toLowerCase().includes("!clear")) { 
-        require('./endpoints/points.js').pointClear(client,message,sql,config)
-    }else if (message.content.toLowerCase().includes(config.plusplus.plusplusText)) { 
-        require('./endpoints/points.js').pointAdd(client,message,sql)
-    }else if (message.content.toLowerCase().includes("!score")) { 
-        require('./endpoints/points.js').pointCheck(client,message,sql)
-    }else if (message.content.toLowerCase().includes("!points")) { 
-        require('./endpoints/points.js').pointCheck(client,message,sql)
+        require('./endpoints/addUserLink.js').addUserLink(client, message, sql, config, 0)
+    } else if (message.content.toLowerCase().includes("!admin")) {
+        require('./endpoints/addUserLink.js').addUserLink(client, message, sql, config, 1)
+    } else if (message.content.toLowerCase().includes("!equipment")) {
+        require('./endpoints/equipmentList.js').equipmentList(sql, message)
+    } else if (message.content.toLowerCase().includes("!code")) {
+        require('./endpoints/code.js').code(client, message, sql, config)
+    } else if (message.content.toLowerCase().includes("!clear")) {
+        require('./endpoints/points.js').pointClear(client, message, sql, config)
+    } else if (message.content.toLowerCase().includes(config.plusplus.plusplusText)) {
+        require('./endpoints/points.js').pointAdd(client, message, sql)
+    } else if (message.content.toLowerCase().includes("!score")) {
+        require('./endpoints/points.js').pointCheck(client, message, sql)
+    } else if (message.content.toLowerCase().includes("!points")) {
+        require('./endpoints/points.js').pointCheck(client, message, sql)
+    } else if (message.content.toLowerCase().includes("!leaderboard")) {
+        require('./endpoints/points.js').leaderboard(client, message, sql, config)
     }
     else {
 
@@ -59,7 +61,7 @@ client.on('ready', () => {
     });
 
 
-    cache.resetCache(sql,client,config)
+    cache.resetCache(sql, client, config)
 
 });
 
@@ -94,7 +96,7 @@ client.on('guildMemberAdd', member => {
 
     });
 
-    cache.resetCache(sql,client,config)
+    cache.resetCache(sql, client, config)
 
 
 });

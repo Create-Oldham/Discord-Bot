@@ -140,5 +140,33 @@ module.exports = {
             message.author.send("Please send this message in a channel on the Create Oldham Server")
         }
 
+    }, leaderboard: (client, message, sql, config) => {
+
+        var output = "The current leaderboard standing is: \n";
+
+        sql.connect()
+            .then((conn) => {
+                new sql.command('Leaderboard', conn)
+                    .then((command) => {
+                        command.RunQuery()
+                            .then((result) => {
+                                console.log(result)
+
+                                result = result.recordset;
+                                for (i = 0; i < result.length; i++) {
+                                    var userid = result[i].userid;
+                                    var points = result[i].points;
+
+                                    output = output + "*" + '<@' + userid + '>' + "*" + " - " + points + " points" + "\n";
+                                }
+                                message.channel.send(output)
+                            })
+                            .catch((err) => sql.responseError(err, 'run query'));
+                    })
+                    .catch((err) => sql.responseError(err, 'command'));
+            })
+            .catch((err) => sql.responseError(err, 'connection'));
+        console.log(output)
+
     }
 }
