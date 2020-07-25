@@ -26,10 +26,11 @@ BEGIN
             INSERT INTO [dbo].[Users]
             (
                 [DiscordID],
-                [Admin]
+                [Admin],
+                [points]
             )
             VALUES
-            (@DiscordID, @Admin);
+            (@DiscordID, @Admin, 0);
             SELECT *
             FROM [dbo].[Users]
             WHERE [ID] = SCOPE_IDENTITY();

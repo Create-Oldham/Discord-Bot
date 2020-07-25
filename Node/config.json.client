@@ -3,6 +3,7 @@
     "botToken":"",
     "inviteTokens": [{"role":"","token":"","msg":""}],
     "inductorRole": "",
+    "pointsClearRoles":"Discord Administrator", 
     "memberRole": "",
     "sqlConfig":{
         "user": "",

@@ -8,8 +8,7 @@ var cache = require('./cache/cache.js')
 client.login(config.botToken);
 
 client.on('message', message => {
-    if (!message.content.startsWith(config.prefix)) return;
-
+    console.log(message.content)
     if (message.content.toLowerCase() === '!ping') {
         // send back "Pong." to the channel the message was sent in
         require("./endpoints/ping.js").ping(message)
@@ -25,10 +24,14 @@ client.on('message', message => {
         require('./endpoints/equipmentList.js').equipmentList(sql,message)
     }else if (message.content.toLowerCase().includes("!code")) { 
         require('./endpoints/code.js').code(client,message,sql,config)
+    }else if (message.content.toLowerCase().includes("!clear")) { 
+        require('./endpoints/points.js').pointClear(client,message,sql,config)
+    }else if (message.content.toLowerCase().includes(config.plusplus.plusplusText)) { 
+        require('./endpoints/points.js').pointAdd(client,message,sql)
     }
     else {
 
-
+        return
 
     }
 

@@ -1,0 +1,1 @@
+UPDATE dbo.Users SET points = 0 

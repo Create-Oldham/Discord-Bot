@@ -1,0 +1,11 @@
+Add     
+
+
+"plusplus":{
+        "pointsClearRoles":"Discord Administrator",
+        "plusplusText":"++"
+    }
+    
+to the config file
+
+Delete prefix config item
