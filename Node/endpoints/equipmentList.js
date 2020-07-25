@@ -1,5 +1,5 @@
 module.exports = {
-    equipmentList: (sql,message) => {
+    equipmentList: (sql, message) => {
         var output = "The current items available to add users to are: \n";
 
         sql.connect()
@@ -8,10 +8,14 @@ module.exports = {
                     .then((command) => {
                         command.RunQuery()
                             .then((result) => {
-                             result = result.recordset[0];
                                 console.log(result)
-                                var name = result.EquipmentName;
-                                output = output + "*"+name+ "*" + "\n";
+
+                                result = result.recordset;
+                                for (i = 0; i < result.length; i++) {
+                                    console.log(result[i].EquipmentName)
+                                    var name = result[i].EquipmentName;
+                                    output = output + "*" + name + "*" + "\n";
+                                }
                                 message.reply(output)
                             })
                             .catch((err) => sql.responseError(err, 'run query'));
@@ -19,6 +23,6 @@ module.exports = {
                     .catch((err) => sql.responseError(err, 'command'));
             })
             .catch((err) => sql.responseError(err, 'connection'));
-            console.log(output)
+        console.log(output)
     }
 }
