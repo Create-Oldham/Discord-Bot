@@ -7,7 +7,7 @@ module.exports = {
             if (args) {
                 const user = require("../utils/discordUtils.js").getUserFromMention(client, args);
                 if (!user) {
-                    return message.reply('Please use a proper mention at the start of the message if you want to add someone to plusplus');
+                    return message.reply('Please use a proper mention at the start of the message if you want to give points to someone');
                 } else {
                     sql.connect()
                         .then((conn) => {
@@ -45,7 +45,7 @@ module.exports = {
                 if (args) {
                     const user = require("../utils/discordUtils.js").getUserFromMention(client, args);
                     if (!user) {
-                        return message.reply('Please use a proper mention if you want to add someone to plusplus');
+                        return message.reply('Please use a proper mention if you want to clear points');
                     } else {
                         sql.connect()
                             .then((conn) => {
@@ -92,7 +92,7 @@ module.exports = {
             if (args !== null) {
                 const user = require("../utils/discordUtils.js").getUserFromMention(client, args);
                 if (!user) {
-                    return message.reply('Please use a proper mention if you want to check someones points');
+                    return message.reply('Please use a proper mention if you want to check someone\'s points');
                 } else {
                     sql.connect()
                         .then((conn) => {
