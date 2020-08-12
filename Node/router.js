@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const config = require('./config.json');
 var sql = require('./utils/utils.js')
 var cache = require('./cache/cache.js')
-
-
+var monitoring = require('./prtg/prtg.js')
+monitoring.prtg()
 client.login(config.botToken);
 
 client.on('message', message => {
