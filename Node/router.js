@@ -8,6 +8,7 @@ monitoring.prtg()
 client.login(config.botToken);
 
 client.on('message', message => {
+    
     console.log(message.content)
     if (message.content.toLowerCase() === '!ping') {
         // send back "Pong." to the channel the message was sent in
@@ -26,7 +27,7 @@ client.on('message', message => {
         require('./endpoints/code.js').code(client, message, sql, config)
     } else if (message.content.toLowerCase().includes("!clear")) {
         require('./endpoints/points.js').pointClear(client, message, sql, config)
-    } else if (message.content.toLowerCase().includes(config.plusplus.plusplusText)) {
+    } else if (/<((@!?\d+)|(:.+?:\d+))> \+\+/g.test(message.content.toLowerCase())) {
         require('./endpoints/points.js').pointAdd(client, message, sql)
     } else if (message.content.toLowerCase().includes("!score")) {
         require('./endpoints/points.js').pointCheck(client, message, sql)
