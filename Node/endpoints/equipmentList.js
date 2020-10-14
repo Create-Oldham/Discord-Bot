@@ -8,11 +8,11 @@ module.exports = {
                     .then((command) => {
                         command.RunQuery()
                             .then((result) => {
-                                console.log(result)
+                                (result)
 
                                 result = result.recordset;
                                 for (i = 0; i < result.length; i++) {
-                                    console.log(result[i].EquipmentName)
+                                    (result[i].EquipmentName)
                                     var name = result[i].EquipmentName;
                                     output = output + "*" + name + "*" + "\n";
                                 }
@@ -23,6 +23,6 @@ module.exports = {
                     .catch((err) => sql.responseError(err, 'command'));
             })
             .catch((err) => sql.responseError(err, 'connection'));
-        console.log(output)
+        (output)
     }
 }

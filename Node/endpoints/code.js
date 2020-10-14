@@ -1,15 +1,15 @@
 module.exports = {
     code: (client, message, sql, config) => {
         const splitMessage = message.content.split(' ')
-        console.log(splitMessage)
+        (splitMessage)
         var searchTermRaw = "";
         for (i = 1; i < splitMessage.length; i++) {
-            console.log(i)
+            (i)
             searchTermRaw = searchTermRaw + splitMessage[i] + " ";
         }
 
         var searchTerm = searchTermRaw.trim();
-        console.log(searchTerm.length)                
+        (searchTerm.length)                
 
         if(searchTerm !== ''){
         sql.connect()
@@ -22,16 +22,16 @@ module.exports = {
 
                         command.RunQuery()
                             .then((result) => {
-                                console.log(result)
+                                (result)
                                 var resultOutcome = result.recordset[0].result;
                                 if (resultOutcome.toLowerCase() === "success") {
                                     message.author.send("Instructions for the *" + result.recordsets[1][0].EquipmentName + "* \n" + result.recordsets[1][0].EquipmentInstructions)
                                 } else if (resultOutcome.toLowerCase() === "failiure") {
                                     message.author.send("You don't have permission to view the code for the machine *" + searchTerm +"*")
-                                    console.log(message.author.id);
+                                    (message.author.id);
                                 } else if (resultOutcome.toLowerCase() === "invalid") {
                                     message.author.send("The search term " + searchTerm + " returned no results, use !Equipment to get a list of potential equipment names ")
-                                    console.log(message.author.id);
+                                    (message.author.id);
                                 } else {
                                     message.author.send("Failiure due to unknown reason")
                                 }

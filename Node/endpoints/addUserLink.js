@@ -3,22 +3,22 @@ module.exports = {
         const splitMessage = message.content.split(' ')
         if (message.guild !== null) {
             if (message.member.roles.cache.some(r => r.name === config.inductorRole)) {
-                console.log("Add new induction")
+                ("Add new induction")
 
                 var searchTermRaw = "";
-                console.log(splitMessage);
+                (splitMessage);
                 for (i = 2; i < splitMessage.length; i++) {
-                    console.log(i)
+                    (i)
                     searchTermRaw = searchTermRaw + splitMessage[i] + " ";
                 }
 
                 var searchTerm = searchTermRaw.trim();
 
-                console.log(searchTerm.length)
+                (searchTerm.length)
                 if (searchTerm !== '') {
 
                     var searchTerm = searchTermRaw.trim();
-                    console.log("Search:" + searchTerm)
+                    ("Search:" + searchTerm)
                     const args = splitMessage[1];
                     if (args) {
                         const user = require("../utils/discordUtils.js").getUserFromMention(client, args);
@@ -37,7 +37,7 @@ module.exports = {
                                             command.RunQuery()
                                                 .then((result) => {
                                                     var resultOutcome = result.recordset[0].result;
-                                                    console.log(resultOutcome)
+                                                    (resultOutcome)
                                                     if (resultOutcome.toLowerCase() === "success") {
                                                         if (admin === 1) {
                                                             message.reply("Added " + '<@' + user.id + '>' + " to the machine as an inductor")
@@ -50,10 +50,10 @@ module.exports = {
 
                                                     } else if (resultOutcome.toLowerCase() === "failiure") {
                                                         message.reply("Permissions Issue")
-                                                        console.log(message.author.id);
+                                                        (message.author.id);
                                                     } else if (resultOutcome.toLowerCase() === "invalid") {
                                                         message.reply("The search term " + searchTerm + " returned no results, use !Equipment to get a list of potential equipment names")
-                                                        console.log(message.author.id);
+                                                        (message.author.id);
                                                     } else {
                                                         message.reply("Failiure due to unknown reason")
                                                     }

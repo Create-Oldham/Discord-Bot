@@ -34,7 +34,7 @@ module.exports = { resetCache:(sql,client,config)  => {
                                                         command.input('Admin', sql.sqlType.TinyInt, 0);
                                                         command.RunQuery()
                                                             .then((result) => {
-                                                                console.log('Sucessfully added to database');
+                                                                console.log('Sucessfully added to database ' + DiscordID);
                                                             })
                                                             .catch((err) => sql.responseError(err, 'run query'));
                                                     })

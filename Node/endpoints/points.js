@@ -82,7 +82,7 @@ module.exports = {
         const splitMessage = message.content.split(' ')
         var args = ""
         if (message.guild !== null) {
-            console.log("1")
+            ("1")
             if (splitMessage.length > 1) {
                 args = splitMessage[1];
 
@@ -150,7 +150,7 @@ module.exports = {
                     .then((command) => {
                         command.RunQuery()
                             .then((result) => {
-                                console.log(result)
+                                (result)
 
                                 result = result.recordset;
                                 for (i = 0; i < result.length; i++) {
@@ -170,7 +170,7 @@ let nickname = member ? member.displayName : null;
                     .catch((err) => sql.responseError(err, 'command'));
             })
             .catch((err) => sql.responseError(err, 'connection'));
-        console.log(output)
+        (output)
 
     }
 }
