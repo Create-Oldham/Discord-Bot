@@ -103,7 +103,7 @@ module.exports = {
                                         .then((result) => {
                                             var currentPoints = result.recordset[0].currentPoints;
                                             if (currentPoints !== null) {
-                                                message.channel.send("Cleared points for " + '<@' + user.id + '>')
+                                                message.channel.send('<@' + user.id + '>' + " has " + currentPoints + " points")
                                             } else {
                                                 message.reply("Failiure due to unknown reason")
                                             }
