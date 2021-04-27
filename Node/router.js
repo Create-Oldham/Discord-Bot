@@ -8,8 +8,7 @@ monitoring.prtg()
 client.login(config.botToken);
 
 client.on('message', message => {
-    
-    console.log(message.content)
+
     if (message.content.toLowerCase() === '!ping') {
         // send back "Pong." to the channel the message was sent in
         require("./endpoints/ping.js").ping(message)
@@ -71,7 +70,6 @@ client.on('ready', () => {
 client.on('guildMemberAdd', member => {
     const logChannel = member.guild.channels.cache.find(channel => channel.name === config.inviteLogChannel);
 
-    console.log(member.id);
     // To compare, we need to load the current invite list.
     member.guild.fetchInvites().then(guildInvites => {
         // This is the *existing* invites for the guild.
