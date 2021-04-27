@@ -36,3 +36,16 @@ To use the codes functionality you will need to insert into the UserEquipmentLin
 ## Running as a service - Mainly production
 
 We use https://www.npmjs.com/package/qckwinsvc in production to create the service, it's quick, easy and probably obsolete one day. But we'll deal with that when it happens
+
+## Commands
+| Command  | Purpose  | Available to  |  Example usage | Responds Inline/DM |
+|---|---|---|---|---|
+|!add| Add a user to the piece of equipment  |  Inductors on that piece of equipment | Inline  | Inline|
+|!admin| Set a user as an inductor (or admin on that piece of equipment) | Inductors already |   |   |
+|!equipment|List all equipment available to get a code for   | All users  |  !equipment | Inline |
+|!code|  Get the code for a piece of equipment|  All users (Only responds for users with access to the code) |  !code laser cutter | DM |
+|!clear| Set the score for a user to 0 | Admins  |!clear @keiranwdigital| Inline |
+|!score| Get the score  | All users  | !score @keiranwdigital | Inline|
+|@user ++| Give the user a point | All users  |@keiranwdigital ++ | Inline|
+|!points| Get the score  | All users  | !points @keiranwdigital | Inline|
+|!leaderboard| Get the leaderboard  |  All users | !leaderboard | Inline |

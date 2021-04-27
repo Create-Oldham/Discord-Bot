@@ -3,10 +3,8 @@ module.exports = {
         const splitMessage = message.content.split(' ')
         if (message.guild !== null) {
             if (message.member.roles.cache.some(r => r.name === config.inductorRole)) {
-                ("Add new induction")
 
                 var searchTermRaw = "";
-                (splitMessage);
                 for (i = 2; i < splitMessage.length; i++) {
                     (i)
                     searchTermRaw = searchTermRaw + splitMessage[i] + " ";
@@ -14,11 +12,9 @@ module.exports = {
 
                 var searchTerm = searchTermRaw.trim();
 
-                (searchTerm.length)
                 if (searchTerm !== '') {
 
                     var searchTerm = searchTermRaw.trim();
-                    ("Search:" + searchTerm)
                     const args = splitMessage[1];
                     if (args) {
                         const user = require("../utils/discordUtils.js").getUserFromMention(client, args);

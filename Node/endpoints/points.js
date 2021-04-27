@@ -156,10 +156,9 @@ module.exports = {
                                 for (i = 0; i < result.length; i++) {
                                     var userid = result[i].userid;
                                     var points = result[i].points;
-
                                     
-let member = message.guild.member(userid);
-let nickname = member ? member.displayName : null;
+                                    let member = message.guild.member(userid);
+                                    let nickname = member ? member.displayName : null;
 
                                     output = output + "**"+nickname+ "**" + " - " + points + " points" + "\n";
                                 }
