@@ -1,7 +1,6 @@
 module.exports = {
     code: (client, message, sql, config) => {
         const splitMessage = message.content.split(' ')
-        (splitMessage)
         var searchTermRaw = "";
         for (i = 1; i < splitMessage.length; i++) {
             (i)
