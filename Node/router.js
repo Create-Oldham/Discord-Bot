@@ -6,7 +6,6 @@ var cache = require('./cache/cache.js')
 var monitoring = require('./prtg/prtg.js')
 monitoring.prtg()
 client.login(config.botToken);
-
 client.on('message', message => {
     
     console.log(message.content)

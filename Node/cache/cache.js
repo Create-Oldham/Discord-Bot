@@ -1,8 +1,9 @@
 module.exports = { resetCache:(sql,client,config)  => {
+    console.log("Resetting Cache")
     var membersInDatabase
     const listOfUsers = client.guilds.cache.get("689500677252186152")
-
     var listOfUserID = [];
+    listOfUsers.members.fetch();
     listOfUsers.members.cache.forEach(m => {
 
         if (m.roles.cache.some(r => r.name === config.memberRole)) {
@@ -11,6 +12,7 @@ module.exports = { resetCache:(sql,client,config)  => {
 
     })
     var membersInDatabase = [];
+
 
     sql.connect()
         .then((conn) => {
@@ -23,7 +25,7 @@ module.exports = { resetCache:(sql,client,config)  => {
                             result.recordset.forEach(m => {
                                 membersInDatabase.push(m.DiscordID)
                             })
-                            if (result.recordset.length >= 1) {
+                            if (result.recordset.length >= 0) {
                                 listOfUserID.forEach(m => {
                                     if (!membersInDatabase.includes(m)) {
                                         sql.connect()
