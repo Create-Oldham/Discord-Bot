@@ -32,3 +32,7 @@ If you have SQL Compare, this project has a SQL compare formatted database schem
 If you don’t create a database and run each of the scripts to create the relevant objects
 
 To use the codes functionality you will need to insert into the UserEquipmentLink table a link between a user and equipment
+
+## Running as a service - Mainly production
+
+We use https://www.npmjs.com/package/qckwinsvc in production to create the service, it's quick, easy and probably obsolete one day. But we'll deal with that when it happens
