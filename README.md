@@ -16,7 +16,7 @@ Do not share your API key with anyone, if someone gets access to it they can use
 
 ## Setting up
 Node layer
-Clone the source code from BitBucket
+Clone the source code from Github
 
 Open the node folder in a command line of your choice
 
