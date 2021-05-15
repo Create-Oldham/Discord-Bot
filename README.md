@@ -20,7 +20,7 @@ Clone the source code from Github
 
 Open the node folder in a command line of your choice
 
-Run {{npm install}} to install all of the required packages
+Run *npm install* to install all of the required packages
 
 copy config.json.client and remove the .client extension
 
@@ -57,3 +57,18 @@ Note, the below commands are customisable by the configuration file
 |@User ++| plusplusText | The suffix to replace ++ | 
 |!clear|pointsClearRoles| The role that a user must have to clear points |
 |!add | inductorRole | The role that must be held before adding to an induction |
+
+## Creating equipment records
+At the current time there is no interface to add equipment or edit the details. It's also impossible to add inductors and users without an inital inductor being added first. This
+
+The good news is that there is a SQL script in the scripts folder to create a record for a piece of equipment and assign an initial inductor.
+
+*Create new equipment.sql* takes the below parameters:
+
+**@DiscordID** - The DiscordID of the inital inductor, you can find this by right clicking on a user and clicking *Copy ID*
+
+**@equipmentName** - The name of the equipment that is being added
+
+**@equipmentInstructions** - The Instructions for using the equipment
+
+Once the script has been run it will output the equipment that has been added, along with the permissions. 
