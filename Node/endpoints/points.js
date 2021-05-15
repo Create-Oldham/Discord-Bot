@@ -150,7 +150,6 @@ module.exports = {
                     .then((command) => {
                         command.RunQuery()
                             .then((result) => {
-                                (result)
 
                                 result = result.recordset;
                                 for (i = 0; i < result.length; i++) {
@@ -169,7 +168,6 @@ module.exports = {
                     .catch((err) => sql.responseError(err, 'command'));
             })
             .catch((err) => sql.responseError(err, 'connection'));
-        (output)
 
     }
 }
