@@ -2,6 +2,7 @@ DECLARE @discordID NVARCHAR(25) = N'';
 
 
 SELECT U.DiscordID,
+       U.ID AS UserID,
        E.EquipmentName,
        CASE
            WHEN UEL.AccessLevel = 1 THEN
