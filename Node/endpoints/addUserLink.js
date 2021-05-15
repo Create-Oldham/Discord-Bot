@@ -33,7 +33,7 @@ module.exports = {
                                             command.RunQuery()
                                                 .then((result) => {
                                                     var resultOutcome = result.recordset[0].result;
-                                                    (resultOutcome)
+                                                    
                                                     if (resultOutcome.toLowerCase() === "success") {
                                                         if (admin === 1) {
                                                             message.reply("Added " + '<@' + user.id + '>' + " to the machine as an inductor")
@@ -45,7 +45,7 @@ module.exports = {
                                                         message.reply('<@' + user.id + '>' + " already exists with a link to " + searchTerm);
 
                                                     } else if (resultOutcome.toLowerCase() === "failiure") {
-                                                        message.reply("Permissions Issue")
+                                                        message.reply("Failiure due to permissions Issue")
                                                         (message.author.id);
                                                     } else if (resultOutcome.toLowerCase() === "invalid") {
                                                         message.reply("The search term " + searchTerm + " returned no results, use !Equipment to get a list of potential equipment names")
