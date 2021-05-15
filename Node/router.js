@@ -7,6 +7,9 @@ var monitoring = require('./prtg/prtg.js')
 monitoring.prtg()
 client.login(config.botToken);
 client.on('message', message => {
+    sendingUsername = message.author.username //we need this to not trigger with replies that include command suggestions
+
+    if (sendingUsername === client.user.username) return; //we don't need to check anything else at this point
 
     if (message.content.toLowerCase() === '!ping') {
         // send back "Pong." to the channel the message was sent in
@@ -33,13 +36,11 @@ client.on('message', message => {
         require('./endpoints/points.js').pointCheck(client, message, sql)
     } else if (message.content.toLowerCase().includes("!leaderboard")) {
         require('./endpoints/points.js').leaderboard(client, message, sql, config)
-    }
-    else {
-
+    } else if (message.content.toLowerCase().includes("!help")) {
+        require('./endpoints/help.js').help(message)
+    } else {
         return
-
     }
-
 });
 
 // Initialize the invite cache
