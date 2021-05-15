@@ -2,7 +2,13 @@ DECLARE @discordID NVARCHAR(25) = N'';
 
 
 SELECT U.DiscordID,
-       E.EquipmentName
+       E.EquipmentName,
+       CASE
+           WHEN UEL.AccessLevel = 1 THEN
+               'Inductor'
+           ELSE
+               'Normal user'
+       END AS LevelOfAccess
 FROM dbo.UserEquipmentLink UEL
     INNER JOIN dbo.Equipment E
         ON E.ID = UEL.EquipmentID
