@@ -6,7 +6,7 @@ module.exports = {
 
                 var searchTermRaw = "";
                 for (i = 2; i < splitMessage.length; i++) {
-                    (i)
+                   
                     searchTermRaw = searchTermRaw + splitMessage[i] + " ";
                 }
 
