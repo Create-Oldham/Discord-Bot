@@ -41,7 +41,7 @@ We use https://www.npmjs.com/package/qckwinsvc in production to create the servi
 | Command  | Purpose  | Available to  |  Example usage | Responds Inline/DM | 
 |---|---|---|---|---|
 |!add| Add a user to the piece of equipment  |  Inductors on that piece of equipment | Inline  | Inline|
-|!admin| Set a user as an inductor (or admin on that piece of equipment) | Inductors already |  !admin @user2 | Inline  |
+|!admin| Set a user as an inductor (or admin on that piece of equipment) | Inductors already |  !admin @user2 laser cutter | Inline  |
 |!equipment|List all equipment available to get a code for   | All users  |  !equipment | Inline |
 |!code|  Get the code for a piece of equipment|  All users (Only responds for users with access to the code) |  !code laser cutter | DM |
 |!clear| Set the score for a user to 0 | Users whith the role defined in pointsClearRoles config setting  |!clear @keiranwdigital| Inline |
